@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Table = ({ data }) => {
+const Table = ({ data, onSummarize }) => {
   const getRiskLevel = (value, type) => {
     switch (type) {
       case 'a1c':
@@ -45,6 +45,7 @@ const Table = ({ data }) => {
             <th className='py-3 px-6 text-left'>Vitamin D</th>
             <th className='py-3 px-6 text-left'>Blood Pressure</th>
             <th className='py-3 px-6 text-left'>Glucose</th>
+            <th className='py-3 px-6 text-left'>Evaluation</th>
           </tr>
         </thead>
         <tbody className='text-gray-600 text-sm font-light'>
@@ -62,6 +63,15 @@ const Table = ({ data }) => {
               </td>
               <td className={`py-3 px-6 ${getRiskLevel(row.glucose, 'glucose')}`}>
                 {row.glucose} mg/dL
+              </td>
+              <td className='py-3 px-6'>
+                <button
+                  type='button'
+                  className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+                  onClick={() => onSummarize(row)}
+                >
+                  Summarize
+                </button>
               </td>
             </tr>
           ))}
@@ -88,6 +98,7 @@ Table.propTypes = {
       glucose: PropTypes.number.isRequired, // Assuming glucose is a number
     })
   ).isRequired, // Validate that data is an array of objects and is required
+  onSummarize: PropTypes.func.isRequired,
 };
 
 export default Table;
